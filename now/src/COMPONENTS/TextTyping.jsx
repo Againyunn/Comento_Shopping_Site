@@ -22,7 +22,7 @@ export default function TextTyping() {
     })
 
     return (
-        <p style={{textAlign: "center", whiteSpace: "pre-wrap", fontFamily: "KyoboHand"}}>{txt}</p>
+        <p style={{textAlign: "center", whiteSpace: "pre-wrap", fontFamily: "KyoboHand",  marginTop: '25%' ,marginBottom:'25%'}}>{txt}</p>
     )
 }
 
