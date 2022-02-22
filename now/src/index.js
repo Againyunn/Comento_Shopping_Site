@@ -7,13 +7,24 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProductDetail from './Pages/ProductDetail';
 import Cart from './Pages/Cart';
 
+// ***** 상품 설명 / 상품 후기 페이지에서 url의 마지막 값에 id가 parameter로 붙는 부분을 페이지 로딩에 적용할 필요
+
+
+// ***** 상품 설명 / 상품 후기 페이지의 최하단 div를 클릭하면 해당 상품의 id를 localStorage에 저장하는 캐싱 기능 구현 필요
+
+
+// ***** 장바구니 기능 : 장바구니(/Cart)로 이동하고, localStorage에 저장된 id를 기반으로 각 상품을 표시하는 페이지 작성 필요
+
+
+
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element ={<App />} />
-      <Route path='/ProductDetail' element ={<ProductDetail/>} />
+      <Route path='/ProductDetail' element ={<ProductDetail/>} >
         <Route path=':id' element={<ProductDetail/>} />
+      </Route>
       <Route path='/Cart' element ={<Cart />} />  
       <Route
       path="*"

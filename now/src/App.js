@@ -10,7 +10,7 @@ import {getWinterList, getGiftList} from './Data/ProductData';
 
 
 function App() {
-
+  //상태값 지정
   const [selectedTheme, setSelectedTheme] = useState('none');
 
 //   function SetWinter(item){
@@ -55,6 +55,8 @@ function App() {
       thisProductList = getGiftList();
     }
 
+
+    // ***** figma의 디자인 서식 적용해서 코드 수정 필요
     return(
       <div style={{}}>
       <nav
@@ -85,10 +87,17 @@ function App() {
     </div>
     );
         }
+  
 
+  // ***** 모든 기능 및 디자인 구현 뒤, Swiper 적용한 컴포넌트 생성 및 적용 필요
+
+
+
+
+
+  // ***** figma의 디자인 서식 적용해서 코드 수정 필요
   return (
     <>
-
       <table>
         <thead style={{position: "static", top:'0px', width:"100%", height: "100px", textAlign:'center'}}>
           <tr style={{position: "static", top: '300px', width:"100%", height: "100px"}}>
