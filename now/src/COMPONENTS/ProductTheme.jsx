@@ -6,6 +6,7 @@ export default function ProductTheme(itemName) {
     // const itemName = product;
 
     const ItemBox = (itemName) => {
+      console.log('ItemBox', itemName)
         return (
 
             <div style={{width:"144px", height:'74px', position: "absolute", backgroundColor: "rgba(0, 0, 0, 0.5)", borderRadius: "10px"}}>
