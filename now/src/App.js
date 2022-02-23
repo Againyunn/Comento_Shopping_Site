@@ -58,22 +58,18 @@ function App() {
 
     // ***** figma의 디자인 서식 적용해서 코드 수정 필요
     return(
-      <div style={{}}>
-      <nav
-      style= {{
-        borderRight: "solid 1px",
-        padding: "1rem"
-      }}
-      >
+      <div style={{textAlign:"center",  float:"top", position: "relative", top:"35px"}}>
+
         {thisProductList.map(findList =>(
           <div key={findList.id}>
           <Link
-          style={{display: "block", margin: "1rem 0", textDecoration: 'none' }}
+          style={{ margin: "1rem 0", textDecoration: 'none' }}
           to={`/ProductDetail/${findList.id}`}
           key={findList.id}
           
           >
             <div>
+              <img src={process.env.PUBLIC_URL+`${findList.image}`} alt={findList.name} />
             <p>{findList.name}</p>
             <br/>
             <p>{findList.describe}</p>
@@ -83,7 +79,7 @@ function App() {
 
         ))}
 
-      </nav>
+
     </div>
     );
         }
@@ -98,43 +94,31 @@ function App() {
   // ***** figma의 디자인 서식 적용해서 코드 수정 필요
   return (
     <>
-      <table>
-        <thead style={{position: "static", top:'0px', width:"100%", height: "100px", textAlign:'center'}}>
-          <tr style={{position: "static", top: '300px', width:"100%", height: "100px"}}>
-          <td style={{position: "static", width:"33.3%"}} />
-          <td style={{position: "static", width:"33.3%"}}>
-          <Link to='/'><h2>토멘코</h2></Link>
-          </td>
-          <td style={{position: "static", width:"33.3%"}} >
-          <Link to='/Cart'>장바구니 이동</Link> 
-          </td>
-          </tr>
-        </thead>
-        
-        <tbody>
-          <tr>
-          <td style={{position:"static"}}>
-          <div style={{ width: "100%", height: "100px", marginRight: '10px'}}
-          onClick={() => setSelectedTheme('winter')}
+      <div style={{ paddingTop: "3%",backgroundColor: "white",zIndex: "2" ,position: "fixed", top: "0px", left:"0px", width:"100%", height:"26px"}}>
+        <div style={{float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}></div>
+        <Link to='/' style={{textDecoration: 'none'}}>
+          <div style={{ fontFamily:'Noto Sans KR', fontStyle:"normal", fontSize:"18px", fontWeight:"bold" , color:"black", float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}>토멘코 쇼핑</div>
+        </Link>
+        <Link to='/Cart' style={{textDecoration: 'none'}}>
+          <div style={{paddingTop: "5px", fontFamily:'Noto Sans KR', fontStyle:"normal", fontSize:"12px", fontWeight:"bold" , color:"black",float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}>장바구니</div>
+        </Link>
+      </div>
+      <div style={{zIndex: "1", float:"top",position: "absolute", top:"10%", width:"100%"}}>
+        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}          onClick={() => setSelectedTheme('winter')}
           >방한 용품</div>
-          </td>
-          <td>
-          <div style={{position:"static", width: "100%", height: "100px", marginRight: '10px'}}
+        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
           onClick={()=> setSelectedTheme('gift')}
           >나를 위한 선물</div>
-          </td>
-          <td>
-          <div style={{position:"static", width: "100%", height: "100px", marginRight: '10px'}}>봄은 온다</div>
-          </td>
-          </tr>
-        </tbody>
-      </table>
+        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+        >봄은 온다</div>
+
+        <div style={{backgroundColor:"#EEEEEE", width:"100%", height:"2px", top:"90px",position:"relative", float:"top"}}></div>
+        
     
-    <ProductList />
+    <ProductList style={{float:"top",marginTop: "5px", width:"100%"}} />
 
-
-    <Link to='/ProductDetail'>상세 페이지</Link>
     <Outlet />
+    </div>
     </>    
   );
 }
