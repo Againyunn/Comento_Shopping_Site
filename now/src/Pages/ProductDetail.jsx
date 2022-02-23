@@ -6,6 +6,9 @@ export default function ProductDetail() {
   //상태값 지정
   const [thisType, setThisType] = useState('detail')
   const [thisNum, setThisNum] = useState(0); //현재 상품의 선택 개체 수
+  const [thisHover, setThisHover] = useState('detail'); //hover 기능 작동 제어용 : 기본은 detail로 지정(hover적용 대상)
+  //테스트용
+  console.log("*", thisHover)
 
   useEffect(() => {
     return (Show())
@@ -140,6 +143,32 @@ export default function ProductDetail() {
     alert(message);
   }
 
+  //CSS 셋팅
+  function HoverDetail() {       //상품 설명의 hover 적용
+    // 기본적으로 white 배경 적용
+    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+
+    // hover 작동 시, 회색으로 변경
+    if (thisHover === 'detail') {
+      result = { background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+    }
+
+    return result;
+  }
+
+  function HoverReview() {       //상품 리뷰의 hover 적용
+    // 기본적으로 white 배경 적용
+    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+
+    // hover 작동 시, 회색으로 변경
+    if (thisHover === 'review') {
+      result = { background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+    }
+
+    return result;
+  }
+
+
   return (
     <>
       <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
@@ -152,28 +181,33 @@ export default function ProductDetail() {
         </Link>
       </div>
       <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
-        <img style={{ float: "top", position: "relative", paddingLeft: "15px" }} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
-        <p style={{ paddingLeft:"30px", float: "top" }}>{thisProduct.name}</p>
-        <p style={{ paddingLeft:"30px", float: "top" }}>{thisProduct.price}</p>
-
-        
-
-        <div style={{ float: "top", position: "relative" }}>
-          <input style={{ float:"right"}} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
-          <p style={{ float:"right"}}>{thisNum}</p>
-          <input style={{ float:"right"}} type='button' onClick={() => {
-            if (thisNum === 0) {
-              return;
-            }
-            setThisNum(thisNum => thisNum - 1);
-          }} value='-' />
+        <div style={{ textAlign: "center" }}>
+          <img style={{ float: "top", position: "relative", paddingLeft: "15px" }} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
         </div>
-        <br/>
-        <br/>
-        <br/>
+        <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
+          <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
+            <div style={{ paddingTop:"15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
+            <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}원</div>
+          </div>
+
+
+          <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
+            <div style={{fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
+            <input style={{ marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
+            <p style={{ position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
+            <input style={{ marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
+              if (thisNum === 0) {
+                return;
+              }
+              setThisNum(thisNum => thisNum - 1);
+            }} value='-' />
+          </div>
+
+        </div>
+
         <div style={{ float: "top", position: "relative" }}>
-          <div style={{ float: "left", position: "relative", width: "50%" }} onClick={() => setThisType('detail')}>상품설명</div>
-          <div style={{ float: "left", position: "relative", width: "50%" }} onClick={() => setThisType('review')}>상품후기</div>
+          <div style={HoverDetail()} onClick={() => { setThisType('detail'); setThisHover('detail') }} >상품설명</div>
+          <div style={HoverReview()} onClick={() => { setThisType('review'); setThisHover('review') }}>상품후기</div>
         </div>
         <Show style={{ float: "top", position: "relative" }} />
 

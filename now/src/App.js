@@ -94,7 +94,7 @@ function App() {
   // ***** figma의 디자인 서식 적용해서 코드 수정 필요
   return (
     <>
-      <div style={{ paddingTop: "3%",backgroundColor: "white",zIndex: "2" ,position: "fixed", top: "0px", left:"0px", width:"100%", height:"26px"}}>
+      <div style={{ borderBottom:"solid 2px #EEEEEE", paddingTop: "3%",backgroundColor: "white",zIndex: "2" ,position: "fixed", top: "0px", left:"0px", width:"100%", height:"26px"}}>
         <div style={{float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}></div>
         <Link to='/' style={{textDecoration: 'none'}}>
           <div style={{ fontFamily:'Noto Sans KR', fontStyle:"normal", fontSize:"18px", fontWeight:"bold" , color:"black", float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}>토멘코 쇼핑</div>
