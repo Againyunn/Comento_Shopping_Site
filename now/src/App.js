@@ -59,27 +59,27 @@ function App() {
     // ***** figma의 디자인 서식 적용해서 코드 수정 필요
     return(
       <div style={{textAlign:"center",  float:"top", position: "relative", top:"35px"}}>
-
+        <nav style={{
+            borderRight: "solid 1px",
+            padding: "1rem"
+          }} >
         {thisProductList.map(findList =>(
           <div key={findList.id}>
           <Link
-          style={{ margin: "1rem 0", textDecoration: 'none' }}
+          style={{ margin: "1rem",  textDecoration: 'none' }}
           to={`/ProductDetail/${findList.id}`}
           key={findList.id}
           
           >
             <div>
               <img src={process.env.PUBLIC_URL+`${findList.image}`} alt={findList.name} />
-            <p>{findList.name}</p>
-            <br/>
-            <p>{findList.describe}</p>
+            <p style={{color:"black", textAlign:"left", fontFamily:"Noto Sans CJK KR", fontStyle:"normal", fontWeight:"bold", fontSize:"20px", lineHeight:"26px"}}>{findList.name}</p>
+            <p style={{color:"black", textAlign:"left", fontFamily:"Noto Sans CJK KR", fontStyle:"normal", fontWeight:"normal", fontSize:"16px", lineHeight:"21px"}}>{findList.describe}</p>
             </div>
           </Link>
           </div>
-
         ))}
-
-
+      </nav>
     </div>
     );
         }
@@ -104,12 +104,12 @@ function App() {
         </Link>
       </div>
       <div style={{zIndex: "1", float:"top",position: "absolute", top:"10%", width:"100%"}}>
-        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}          onClick={() => setSelectedTheme('winter')}
+        <div style={{color: "white", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,opacity:"0.85",backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}          onClick={() => setSelectedTheme('winter')}
           >방한 용품</div>
-        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+        <div style={{color:"white", opacity:"0.85",paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
           onClick={()=> setSelectedTheme('gift')}
           >나를 위한 선물</div>
-        <div style={{paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+        <div style={{color:"white", opacity:"0.85", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
         >봄은 온다</div>
 
         <div style={{backgroundColor:"#EEEEEE", width:"100%", height:"2px", top:"90px",position:"relative", float:"top"}}></div>

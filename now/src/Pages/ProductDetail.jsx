@@ -172,7 +172,9 @@ export default function ProductDetail() {
   return (
     <>
       <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
-        <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}></div>
+        <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={()=>{window.history.back();}}>
+          <img style={{height:"20px", width:"20px"}} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'}/>
+        </div>
         <Link to='/' style={{ textDecoration: 'none' }}>
           <div style={{ fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>토멘코 쇼핑</div>
         </Link>
