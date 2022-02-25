@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom'
-import { getGiftList, getWinterList } from '../Data/ProductData';
+import { getGiftList, getReview, getSpringComes, getWinterList } from '../Data/ProductData';
 
 export default function ProductDetail() {
   //상태값 지정
@@ -8,7 +8,7 @@ export default function ProductDetail() {
   const [thisNum, setThisNum] = useState(0); //현재 상품의 선택 개체 수
   const [thisHover, setThisHover] = useState('detail'); //hover 기능 작동 제어용 : 기본은 detail로 지정(hover적용 대상)
   //테스트용
-  console.log("*", thisHover)
+  // console.log("*", thisHover)
 
   useEffect(() => {
     return (Show())
@@ -17,7 +17,7 @@ export default function ProductDetail() {
   //url의 parameter를 변수로 저장
   let params = useParams();
   let productId = params.id; //이번 페이지에서 사용할 상품식별자
-  console.log(productId)
+  // console.log(productId)
 
   //데이터 셋팅
   let thisProductList = '' //현재 상품군 리스트
@@ -33,34 +33,106 @@ export default function ProductDetail() {
     thisProductList = getGiftList();
   }
 
+  //나를 위한 선물
+  if (300 <= productId && productId < 400) {
+    thisProductList = getSpringComes();
+  }
+
   //현재 상품의 정보만 담기
   thisProduct = thisProductList.find(item => item.id == productId)
-  console.log(thisProduct)
-  console.log(thisProductList)
+  // console.log(thisProduct)
+  // console.log(thisProductList)
+
+
+  //상품 별 리뷰 글 불러오기
+  function ShowReviewContent() {
+    //DB에서 모든 리뷰 글 호출
+    let allReviews = getReview();
+
+    console.log(allReviews)
+
+    //현재 조회하고 있는 상품의 리뷰만 추출후 저장용 배열
+    let thisReview = [];
+
+    //현재 보고있는 상품의 리뷰만 필터링
+    for (var j = 0; j < allReviews.length; j++) {
+      if (productId == allReviews[j].id) {
+        thisReview.push(allReviews[j]);
+      }
+    }
+
+
+    //리뷰가 없다면, 아직 리뷰가 없다는 텍스트 출력
+    if (thisReview.length ===0){
+      return(
+        <>
+          <div style={{paddingTop: "4rem",paddingBottom: "4rem",marginTop:"2rem",marginBottom:"2rem",top:"10px", textAlign:"center", fontFamily:"Noto Sans CJK KR", fontSize:"15px", color:"gray" }}>
+            앗, 아직 리뷰가 없어요!
+          </div>
+        </>
+      )
+        }
+    //테스트용 
+    console.log(thisReview);
+
+    return (
+      <div style={{ textAlign: "center", float: "top", position: "relative", top: "35px" }}>
+        <nav style={{
+          padding: "1rem"
+        }} >
+          {thisReview.map(findList => (
+            <div key={findList.userName + findList.date} style={{marginBottom:"2rem"}}>
+              <CountStar style={{clear:"both",top:"0px", position:"relative"}} findList={findList.star} />
+              <div style={{clear:"both", top: "0px", position:"relative"}}>
+                <div style={{float:"left", width:"10%", position:"relative"}} />
+                <div style={{textAlign:"left", width:"40%", float:"left", fontFamily:"Noto Sans CJK KR", fontStyle: "normal", fontWeight: "bold", fontSize: "15px" }}>{findList.userName}</div>
+                <div style={{textAlign:"left", width:"30%", float:"left", color: "gray", fontFamily: "Noto Sans CJK KR", fontStyle: "normal", fontWeight: "normal", fontSize: "15px" }}>{findList.date}</div>
+              </div>
+              <br/>
+              <div style={{textAlign:"left", float:"top", color: "gray", fontFamily: "Noto Sans CJK KR", fontStyle: "normal", fontWeight: "normal", fontSize: "15px" }}>{findList.memo}</div>
+            </div>
+          ))}
+        </nav>
+      </div>
+    )
+
+  }
+
+  //별 개수 찍는 함수
+  function CountStar(starNum) {
+    //별의 개수 출력하는 로직
+    var printStar = ''
+    // console.log(Number(starNum.findList))
+
+    for (var k = 0; k < Number(starNum.findList); k++) {
+      printStar += '★';
+    }
+
+    // console.log(printStar)
+
+    return (
+      <>
+      <div style={{float:"left", position:"relative", width:"30%", textAlign:"left", color: "#FFD228" }}>{printStar}</div>
+      </>
+    );
+  }
+
 
   //상품설명
   function ShowDetail() {
 
     return (
-      <div style={{ width: "100%" }}>
-        <nav
-          style={{
-            borderRight: "solid 1px",
-            padding: "1rem"
-          }}
-        >
 
-          <div key={thisProduct.id}>
-            <div>
-              <p style={{ float: "top" }}>{thisProduct.name}</p>
-              <p style={{ float: "top" }}>{thisProduct.price}</p>
-            </div>
-          </div>
+      <nav
+        style={{
+          padding: "2rem", height: "100%", marginBottom: "15%", marginTop: "10px"
+        }}
+      >
+        <div key={thisProduct.id} style={{ textAlign: "center" }}>
+          <img style={{top:"1rem",maxWidth:"100%", maxHeight:"100%", float: "top" }} src={process.env.PUBLIC_URL + `${thisProduct.imageDetail}`} alt={thisProduct.name} />
+        </div>
+      </nav>
 
-
-
-        </nav>
-      </div>
     );
   }
 
@@ -68,21 +140,13 @@ export default function ProductDetail() {
   function ShowReview() {
 
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", marginBottom:"70px" }}>
         <nav
           style={{
-            borderRight: "solid 1px",
             padding: "1rem"
           }}
         >
-
-          <div key={thisProduct.id}>
-            <div>
-              <p style={{ float: "left", width: "50%" }}>{thisProduct.name}</p>
-              <p style={{ float: "left", width: "50%" }}>{thisProduct.describe}</p>
-            </div>
-          </div>
-
+          < ShowReviewContent />
         </nav>
       </div>
     );
@@ -123,7 +187,7 @@ export default function ProductDetail() {
     thisProduct.num = thisNum;
 
     let thisProductCart = thisProduct
-    console.log(thisProductCart)
+    // console.log(thisProductCart)
 
     let message = '이미 장바구니에 있습니다.';
 
@@ -146,11 +210,11 @@ export default function ProductDetail() {
   //CSS 셋팅
   function HoverDetail() {       //상품 설명의 hover 적용
     // 기본적으로 white 배경 적용
-    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal" };
 
     // hover 작동 시, 회색으로 변경
     if (thisHover === 'detail') {
-      result = { background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+      result = { fontWeight: "bold", background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px" };
     }
 
     return result;
@@ -158,11 +222,11 @@ export default function ProductDetail() {
 
   function HoverReview() {       //상품 리뷰의 hover 적용
     // 기본적으로 white 배경 적용
-    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+    let result = { background: "white", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal" };
 
     // hover 작동 시, 회색으로 변경
     if (thisHover === 'review') {
-      result = { background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", };
+      result = { fontWeight: "bold", background: "#EEEEEE", float: "left", position: "relative", width: "50%", textAlign: "center", height: "30px", paddingTop: "10px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px" };
     }
 
     return result;
@@ -172,8 +236,8 @@ export default function ProductDetail() {
   return (
     <>
       <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
-        <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={()=>{window.history.back();}}>
-          <img style={{height:"20px", width:"20px"}} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'}/>
+        <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={() => { window.history.back(); }}>
+          <img style={{ height: "20px", width: "20px" }} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'} />
         </div>
         <Link to='/' style={{ textDecoration: 'none' }}>
           <div style={{ fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>토멘코 쇼핑</div>
@@ -184,20 +248,20 @@ export default function ProductDetail() {
       </div>
       <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
         <div style={{ textAlign: "center" }}>
-          <img style={{ float: "top", position: "relative", paddingLeft: "15px" }} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
+          <img style={{ maxWidth:"100%", maxHeight:"100%", float: "top", position: "relative"}} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
         </div>
         <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
           <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
-            <div style={{ paddingTop:"15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
+            <div style={{ paddingTop: "15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
             <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}원</div>
           </div>
 
 
           <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
-            <div style={{fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
-            <input style={{ marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
-            <p style={{ position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
-            <input style={{ marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
+            <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
+            <input style={{ border: "0px", borderRadius: "5px", background: "#EEEEEE", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
+            <p style={{ fontSize: "15px", position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
+            <input style={{ border: "0px", borderRadius: "5px", background: "#EEEEEE", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
               if (thisNum === 0) {
                 return;
               }
@@ -207,14 +271,14 @@ export default function ProductDetail() {
 
         </div>
 
-        <div style={{ float: "top", position: "relative" }}>
+        <div style={{ height: "100%", float: "top", position: "relative" }}>
           <div style={HoverDetail()} onClick={() => { setThisType('detail'); setThisHover('detail') }} >상품설명</div>
           <div style={HoverReview()} onClick={() => { setThisType('review'); setThisHover('review') }}>상품후기</div>
         </div>
         <Show style={{ float: "top", position: "relative" }} />
 
 
-        <div style={{ float: "top", paddingTop: "3%", backgroundColor: " #24DBAF", zIndex: "2", position: "fixed", bottom: "0px", left: "0px", width: "100%", height: "50px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", textAlign: "center" }} onClick={() => ProductCart()}>장바구니 담기</div>
+        <div style={{ float: "top", paddingTop: "3px", backgroundColor: " #24DBAF", zIndex: "2", position: "fixed", bottom: "0px", left: "0px", width: "100%", height: "50px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", textAlign: "center" }} onClick={() => ProductCart()}>장바구니 담기</div>
       </div>
 
     </>

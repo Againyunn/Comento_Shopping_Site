@@ -6,30 +6,12 @@ import { Outlet, Link} from 'react-router-dom';
 import ProductDetail from './Pages/ProductDetail';
 import Cart from './Pages/Cart';
 import { useEffect, useState } from 'react';
-import {getWinterList, getGiftList} from './Data/ProductData';
+import {getWinterList, getGiftList, getSpringComes} from './Data/ProductData';
 
 
 function App() {
   //상태값 지정
   const [selectedTheme, setSelectedTheme] = useState('none');
-
-//   function SetWinter(item){
-//   useEffect(() =>{
-//       setSelectedTheme(item)
-//   },)
-// }
-
-  // useEffect(() =>{
-  //   if(selectedTheme === 'winter'){
-  //     return Winter(selectedTheme)
-  //     // return ProductList(selectedTheme)
-  //   }
-  //   if(selectedTheme === 'gift'){
-  //     return Gift(selectedTheme)
-  //   }
-    
-  //   // setSelectedTheme(item)
-  // },);
 
   useEffect(() =>{
     return ProductList(selectedTheme)
@@ -47,7 +29,6 @@ function App() {
     //방한용품
     if(selectedTheme === 'winter'){
       thisProductList = getWinterList(); //해당 리스트 담아오기
-      console.log(thisProductList)//테스트용
     }
 
     //나를 위한 선물
@@ -55,13 +36,17 @@ function App() {
       thisProductList = getGiftList();
     }
 
+    //봄은 온다
+    if(selectedTheme === 'spring'){
+      thisProductList = getSpringComes();
+    }
+
 
     // ***** figma의 디자인 서식 적용해서 코드 수정 필요
     return(
       <div style={{textAlign:"center",  float:"top", position: "relative", top:"35px"}}>
         <nav style={{
-            borderRight: "solid 1px",
-            padding: "1rem"
+            padding: "1rem", border: "0px"
           }} >
         {thisProductList.map(findList =>(
           <div key={findList.id}>
@@ -72,7 +57,7 @@ function App() {
           
           >
             <div>
-              <img src={process.env.PUBLIC_URL+`${findList.image}`} alt={findList.name} />
+              <img style={{maxWidth:"100%", maxHeight:"100%"}} src={process.env.PUBLIC_URL+`${findList.image}`} alt={findList.name} />
             <p style={{color:"black", textAlign:"left", fontFamily:"Noto Sans CJK KR", fontStyle:"normal", fontWeight:"bold", fontSize:"20px", lineHeight:"26px"}}>{findList.name}</p>
             <p style={{color:"black", textAlign:"left", fontFamily:"Noto Sans CJK KR", fontStyle:"normal", fontWeight:"normal", fontSize:"16px", lineHeight:"21px"}}>{findList.describe}</p>
             </div>
@@ -90,7 +75,6 @@ function App() {
 
 
 
-
   // ***** figma의 디자인 서식 적용해서 코드 수정 필요
   return (
     <>
@@ -104,12 +88,14 @@ function App() {
         </Link>
       </div>
       <div style={{zIndex: "1", float:"top",position: "absolute", top:"10%", width:"100%"}}>
-        <div style={{color: "white", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,opacity:"0.85",backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}          onClick={() => setSelectedTheme('winter')}
-          >방한 용품</div>
-        <div style={{color:"white", opacity:"0.85",paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+        <div style={{backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${process.env.PUBLIC_URL+'/Imgs/썸네일/방한용품.png'})` ,color: "white", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,opacity:"0.85",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}  onClick={() => setSelectedTheme('winter')}
+          >방한 용품
+          </div>
+        <div style={{backgroundPosition: "center",backgroundRepeat: "no-repeat", backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${process.env.PUBLIC_URL+'/Imgs/썸네일/나를위한선물.png'})`, color:"white", opacity:"0.85",paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
           onClick={()=> setSelectedTheme('gift')}
           >나를 위한 선물</div>
-        <div style={{color:"white", opacity:"0.85", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,backgroundColor:"rgba(0, 0, 0, 0.5)",borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+        <div style={{backgroundPosition: "center",backgroundRepeat: "no-repeat", backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${process.env.PUBLIC_URL+'/Imgs/썸네일/봄은온다.png'})`, color:"white", opacity:"0.85", paddingTop:"20px",marginBottom:"5px", marginRight: "5px", marginLeft:"5px" ,borderRadius: "10px",top:"10%",position:"relative", float: "left", width: "30%", height:"50px", textAlign: "center"}}
+         onClick={() => setSelectedTheme('spring')}
         >봄은 온다</div>
 
         <div style={{backgroundColor:"#EEEEEE", width:"100%", height:"2px", top:"90px",position:"relative", float:"top"}}></div>

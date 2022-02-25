@@ -75,8 +75,7 @@ export default function Cart() {
       <div style={{}}>
         <nav
           style={{
-            padding: "2px",
-            borderRight: "solid 1px",
+            padding: "2px"
           }}
         >
           {CartList.map(findList => (
@@ -117,7 +116,7 @@ export default function Cart() {
                     }} />
                 </div>
                 <div style={{ position: "relative", float: "left", width: "50%" }}>
-                  <img style={{ position: "relative", width: "100%", height: "80%" }} src={process.env.PUBLIC_URL + `${findList.image}`} alt={findList.name} />
+                  <img style={{ position: "relative", maxWidth: "100%", maxHeight: "80%" }} src={process.env.PUBLIC_URL + `${findList.image}`} alt={findList.name} />
                 </div>
                 <div style={{ position: "relative", paddingRight: "5px", float: "right", width: "40%" }}>
                   <div style={{ fontSize: "15px" }}>{findList.name}</div>
