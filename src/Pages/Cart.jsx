@@ -7,19 +7,16 @@ export default function Cart() {
   //상태 셋팅
   const [cartLoad, setCartLoad] = useState('')  //선택 상품 장바구니에서 삭제
   const [resultTotalSum, setResultTotalSum] = useState(0);
-  // const [thisTotalPrice, setThisTotalPrice] = useState(0);
-
-  //변수 및 연산용 데이터 셋팅
-  let thisCalculationList = [];
-  // let thisTotalPrice = 0;
-  // let resultTotalSum = 0
+  const [checkedItems, setCheckedItems] = useState([]);
 
   useEffect(() => {
+    TotalSum()
     return ShowCart()
   })
 
-  useEffect(() =>{
-   TotalSum()
+  //선택한 상품들의 목록 변화 → 총 가격 변화
+  useEffect(()=>{
+    TotalSum()
   },[resultTotalSum])
 
 
@@ -44,33 +41,46 @@ export default function Cart() {
     CartList.push(thisProductId);
   }
 
-
-  // ***********************현재 문제가 있는 구역!!! ********************** 함수 연산 결과(resultTotalSum) 출력이 안됩니다!!!!
   //현재 선택된 장바구니의 상품 가격 총 합 연산 로직
   function TotalSum() {
     let thisSum = 0;
+    var thisTmp = 0;
 
-    //thisCalculationList의 모든 원소 합 구하기
-    for(var i = 0; i < thisCalculationList.length; i++){
-      var tmp = thisCalculationList[i].num * thisCalculationList[i].price
-
-      thisSum += tmp
-      console.log(`${i}번째`,thisSum)
+    //해당하는 상품 확인 
+    for(var i = 0; i < checkedItems.length; i++){
+      for(var j = 0; j < CartList.length; j++){
+        if(checkedItems[i] === CartList[j].id){
+          thisTmp = CartList[j].num * CartList[j].price;
+          thisSum += thisTmp;
+          console.log("thisSum:",thisSum)
+        }
+      }
     }
-    
-    //테스트 용
-    console.log('test', thisSum)
-
-    // setThisTotalPrice(thisSum);
     return(
-      thisSum
+      setResultTotalSum(thisSum)
     )
+  }
+
+  // let checkedItemPrice = []
+
+  //체크박스 선택된 상품에 대한 상태처리
+  function CheckedItems(checked, thisId){ //선택여부(checked), 아이템항목(id)
+    //선택된 경우: 선택항목 리스트에 추가
+    if (checked) {
+      //해당 상품의 가격 업로드
+      setCheckedItems([...checkedItems, thisId]);
+
+    }
+    else{
+      //선택항목에서 해당 아이템 제거
+      setCheckedItems(checkedItems.filter((e) => e !== thisId)); 
+    }
   }
 
   //장바구니 상품 목록 반환(LocalStorage에 있는 정보 호출)
   function ShowCart() {
+
     setCartLoad('');
-    console.log(CartList)
     return (
       <div style={{}}>
         <nav
@@ -86,34 +96,15 @@ export default function Cart() {
               }}>X</p>
               <div style={{ float: "top", width: "100%", height: "100px", paddingBottom: "10px" }}>
                 <div style={{ position: "relative", float: "left", width: "8%" }}>
-                  <input type="checkbox" onChange={
-                    () => {
-
-                      //체크박스 선택 해제 & 해당 상품의 정보가 thisCalculationList에 있는 경우  >>> 현재 상품 정보 삭제
-                      if (thisCalculationList.findIndex(x => x.id === findList.id) >= 0) {
-
-                        let thisNum = thisCalculationList.findIndex(x => x.id === findList.id);
-                        thisCalculationList.splice(thisNum,1);
-
-                        //테스트
-                        console.log("subtract", thisCalculationList)
-                        // setResultTotalSum(resultTotalSum + 1);
-                        setResultTotalSum(TotalSum())
-                        return
-                      }
-
-                      //체크박스 선택 && 해당 상품의 정보가 thisCalculationList에 없는 경우 >>> 현재 상품 정보 추가
-                      if (thisCalculationList.find(x => x.id === findList.id) === undefined) {
-                        thisCalculationList.push({ id: findList.id, num: findList.num, price: findList.price });
-                        
-                        //테스트
-                        console.log("add", thisCalculationList)
-                        //상품 총 가격 업로드 연산
-                        setResultTotalSum(TotalSum())
-                        // setResultTotalSum(resultTotalSum + 1);
-                      }
-
-                    }} />
+                  <input id={findList.id} type="checkbox" onChange={
+                    (e) => {
+                      console.log("e.currentTarget.checked:",e.currentTarget.checked)
+                      CheckedItems(e.currentTarget.checked, findList.id)
+                      console.log("checkedItems2",checkedItems)
+                      
+                      TotalSum()
+                    }}
+                    checked={checkedItems.includes(findList.id) ? true: false} />
                 </div>
                 <div style={{ position: "relative", float: "left", width: "50%" }}>
                   <img style={{ position: "relative", maxWidth: "100%", maxHeight: "80%" }} src={process.env.PUBLIC_URL + `${findList.image}`} alt={findList.name} />
@@ -126,23 +117,11 @@ export default function Cart() {
                 </div>
               </div>
             </div>
-            
           ))}
-
         </nav>
       </div>
     )
   }
-
-
-  function JustDo(){
-    return TotalSum(resultTotalSum)
-  }
-  //CSS 체크박스 구현
-
-
-
-
 
   return (
     <>
