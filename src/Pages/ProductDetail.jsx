@@ -167,6 +167,7 @@ export default function ProductDetail() {
     let thisProductCart = thisProduct
     // console.log(thisProductCart)
 
+    //상황에 맞는 메시지 표시
     let message = '이미 장바구니에 있습니다.';
 
     //메소드 구성: (key값, value)형태
@@ -179,11 +180,11 @@ export default function ProductDetail() {
       }
 
       localStorage.setItem(productId, value);
-      // message = '장바구니에 저장되었습니다.';
+      message = '장바구니에 저장되었습니다.';
     }
 
       //디자인 적용된 alert 실행
-      alertTheme("장바구니에 저장되었습니다.")
+      alertTheme(message);
   }
 
   return (
