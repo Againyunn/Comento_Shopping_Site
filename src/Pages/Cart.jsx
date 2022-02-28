@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getWinterList, getGiftList } from '../Data/ProductData'
 
+//alert 디자인 : sweetalert2 npm package 이용
+//npm install --save sweetalert2 sweetalert2-react-content 명령어로 설치
+import alertTheme from '../Components/alertTheme';
 
 export default function Cart() {
   //상태 셋팅
@@ -148,7 +151,11 @@ export default function Cart() {
           <div style={{  backgroundColor: "white",fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "12px", fontWeight:"bold", position:"relative", color:"#FF4646" ,textAlign:"right",float:"right", width:"50%", right:"10px"}}>{resultTotalSum}원</div>
         </div>
         <div style={{fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", background: "#24DBAF", position:"relative", textAlign:"center", float:"top", bottom:"0px", width:"100%", height:"40px", paddingTop:"30px"}}
-        onClick={()=>{alert("주문되었습니다.")}}>
+          onClick={()=>{
+            //디자인 적용된 alert 실행
+            alertTheme("주문되었습니다.");
+          } 
+        }>
           주문하기
         </div>
       </div>

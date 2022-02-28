@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom'
+import alertTheme from '../Components/alertTheme';//사용자 지정 alert 디자인 적용
 import ShowType from '../Components/ShowType';
 import { getGiftList, getReview, getSpringComes, getWinterList } from '../Data/ProductData';
 
@@ -19,6 +20,9 @@ export default function ProductDetail() {
   //데이터 셋팅
   let thisProductList = '' //현재 상품군 리스트
   let thisProduct = '' //현재 상품(id 일치 상품)
+
+  // //alert 디자인 변수 셋팅
+  // const MySwal = withReactContent(Swal)
 
   //방한용품
   if (100 <= productId && productId < 200) {
@@ -147,11 +151,15 @@ export default function ProductDetail() {
   //   localStorage.setItem(k, value)
   // }
 
+
   //장바구니(localStorage에 저장)
   function ProductCart() {
     // let add = {num : thisNum};
     if (thisNum === 0) {
-      return alert("1개 이상 선택해주세요.")
+      return (
+        //디자인 적용된 alert 실행
+        alertTheme("1개 이상 선택해주세요.")
+      )
     }
 
     thisProduct.num = thisNum;
@@ -171,10 +179,11 @@ export default function ProductDetail() {
       }
 
       localStorage.setItem(productId, value);
-      message = '장바구니에 저장되었습니다.';
+      // message = '장바구니에 저장되었습니다.';
     }
 
-    alert(message);
+      //디자인 적용된 alert 실행
+      alertTheme("장바구니에 저장되었습니다.")
   }
 
   return (
