@@ -122,8 +122,6 @@ let Review = [        //id: 상품코드, userName: 사용자 아이디, date: �
         memo: "은은한 불빛 덕분에 켜두면 분위기 만점❤3❤",
         star: 5
     },
-
-
 ]
 
 

@@ -80,6 +80,32 @@ export default function Cart() {
     }
   }
 
+  //체크박스 모양 변경
+  const CheckBoxStyle = styled.label`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 13px;
+    background-color: none;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    transform:${props => (props.checkInput ? `display : none`: `display: flex`)}
+    transform:${props => (props.checked ? `background-color: yellow`: `background-color: none`)}
+  `
+    
+  function CheckBox({children}){
+    return <CheckBoxStyle>{children}</CheckBoxStyle>
+  }
+  
+
+
+
+
+
+
+
   //장바구니 상품 목록 반환(LocalStorage에 있는 정보 호출)
   function ShowCart() {
 

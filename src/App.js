@@ -8,6 +8,8 @@ import {getWinterList, getGiftList, getSpringComes} from './Data/ProductData';
 //Swiper 적용
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+
+//선택한 제품군을 보여줄 때 hover 적용
 import SelectThemeHover from './Components/SelectThemeHover';
 
 function App() {

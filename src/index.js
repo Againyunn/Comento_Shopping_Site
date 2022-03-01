@@ -16,8 +16,6 @@ import Cart from './Pages/Cart';
 // ***** 장바구니 기능 : 장바구니(/Cart)로 이동하고, localStorage에 저장된 id를 기반으로 각 상품을 표시하는 페이지 작성 필요
 
 
-
-
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
