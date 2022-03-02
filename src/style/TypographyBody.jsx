@@ -1,3 +1,6 @@
+//1차 과제 시 작성했던 소스(Tomenco Shopping mall과 관련 x)
+
+
 import React from 'react'
 import styled from "styled-components";
 import MakeTable from '../../Components/MakeTable';

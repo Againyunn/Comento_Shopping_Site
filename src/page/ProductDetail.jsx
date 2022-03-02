@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom'
-import alertTheme from '../Components/alertTheme';//사용자 지정 alert 디자인 적용
-import ShowType from '../Components/ShowType';  //상세페이지 || 리뷰의 hover 적용
-import { getGiftList, getReview, getSpringComes, getWinterList } from '../Data/ProductData';
+import AlertTheme from '../component/AlertTheme';//사용자 지정 alert 디자인 적용
+import ShowType from '../component/ShowType';  //상세페이지 || 리뷰의 hover 적용
+import { getGiftList, getReview, getSpringComes, getWinterList } from '../data/ProductData';
 
 export default function ProductDetail() {
   //상태값 지정
@@ -158,7 +158,7 @@ export default function ProductDetail() {
     if (thisNum === 0) {
       return (
         //디자인 적용된 alert 실행
-        alertTheme("1개 이상 선택해주세요.")
+        AlertTheme("1개 이상 선택해주세요.")
       )
     }
 
@@ -184,7 +184,7 @@ export default function ProductDetail() {
     }
 
       //디자인 적용된 alert 실행
-      alertTheme(message);
+      AlertTheme(message);
   }
 
 

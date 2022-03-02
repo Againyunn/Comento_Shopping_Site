@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getWinterList, getGiftList } from '../Data/ProductData'
 
 //alert 디자인 : sweetalert2 npm package 이용
 //npm install --save sweetalert2 sweetalert2-react-content 명령어로 설치
-import alertTheme from '../Components/alertTheme';
+import AlertTheme from '../component/AlertTheme';
 
 export default function Cart() {
   //상태 셋팅
@@ -15,7 +14,7 @@ export default function Cart() {
   useEffect(() => {
     TotalSum()
     return ShowCart()
-  })
+  },[])
 
   //선택한 상품들의 목록 변화 → 총 가격 변화
   useEffect(()=>{
@@ -101,11 +100,6 @@ export default function Cart() {
   
 
 
-
-
-
-
-
   //장바구니 상품 목록 반환(LocalStorage에 있는 정보 호출)
   function ShowCart() {
 
@@ -179,7 +173,7 @@ export default function Cart() {
         <div style={{fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", background: "#24DBAF", position:"relative", textAlign:"center", float:"top", bottom:"0px", width:"100%", height:"40px", paddingTop:"30px"}}
           onClick={()=>{
             //디자인 적용된 alert 실행
-            alertTheme("주문되었습니다.");
+            AlertTheme("주문되었습니다.");
           } 
         }>
           주문하기

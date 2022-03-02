@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 
 //사용자 지정 alert 디자인을 반환하는 component
-export default function alertTheme(alertContent) {
+export default function AlertTheme(alertContent) {
   return (
     //디자인 적용된 alert 실행
     Swal.fire({
