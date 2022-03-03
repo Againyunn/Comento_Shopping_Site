@@ -7,6 +7,7 @@ import "swiper/css";
 
 //선택한 제품군을 보여줄 때 active 적용
 import SelectThemeActive from '../component/SelectThemeActive';
+import styled from 'styled-components';
 
 function Index() {
   //상태값 지정
@@ -67,15 +68,7 @@ function Index() {
   
   return (
     <>
-      <div style={{ borderBottom:"solid 2px #EEEEEE", paddingTop: "3%",backgroundColor: "white",zIndex: "2" ,position: "fixed", top: "0px", left:"0px", width:"100%", height:"26px"}}>
-        <div style={{float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}></div>
-        <Link to='/' style={{textDecoration: 'none'}}>
-          <div style={{ fontFamily:'Noto Sans KR', fontStyle:"normal", fontSize:"18px", fontWeight:"bold" , color:"black", float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }} onClick={()=>window.location.reload()}>토멘코 쇼핑</div>
-        </Link>
-        <Link to='/Cart' style={{textDecoration: 'none'}}>
-          <div style={{paddingTop: "5px", fontFamily:'Noto Sans KR', fontStyle:"normal", fontSize:"12px", fontWeight:"bold" , color:"black",float:"left", top: "0px", left:"0px", width:"33.3%",height: "8%", textAlign:'center' }}>장바구니</div>
-        </Link>
-      </div>
+    <MainHeadBlock/>
       <div style={{zIndex: "1", float:"top",position: "absolute", top:"10%", width:"100%"}}>
       <Swiper className="mySwiper" style={{ borderBottom:"solid 2px #EEEEEE"}}>
         <SwiperSlide>
@@ -114,3 +107,91 @@ function Index() {
 }
 
 export default Index;
+
+//디자인 적용
+
+const MainHead = styled.div`
+  /*배치*/
+  display: flex;
+  padding-top: 3%;
+  z-index: 2;
+  top: 0;
+  position: fixed;
+
+  align-items: center;
+
+  container{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+
+  /*크기*/
+  width: 100%;
+  height: 40px;
+  
+  /*색 조정 */
+  background-color: white;
+  border-bottom: solid 2px #EEEEEE;
+
+`
+
+const CenterMainHead = styled.div`
+  /*배치*/
+  display: flex;
+  text-align: center;
+  position: relative;
+  margin-right: 10%;
+  margin-left: 10%;
+
+  /*크기*/
+  width: 30%;
+
+  /*글씨*/
+  color: black;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: bold;
+  white-space : nowrap; 
+` 
+
+const SideMainHead = styled.div`
+  /*배치*/
+  display: flex;
+  text-align: center;
+  position: relative;
+  
+  /*크기*/
+  width: 30%;
+
+  /*글씨*/
+  color: black;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: normal;
+  white-space : nowrap; 
+`
+
+function MainHeadBlock(){
+  return (
+    <MainHead className='container'>
+      <SideMainHead>
+      </SideMainHead>
+        <CenterMainHead>
+          <Link to="/"  style={{ textDecoration: 'none', color: "black" }}>
+          토멘코 쇼핑
+          </Link>
+        </CenterMainHead>
+        <SideMainHead>
+          <Link to="/Cart"  style={{ textDecoration: 'none', color:"black" }}>
+          장바구니
+          </Link>
+        </SideMainHead>
+
+    </MainHead>
+  )
+
+}
