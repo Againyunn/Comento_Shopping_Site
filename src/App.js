@@ -4,6 +4,7 @@ import Index from './page/Index';
 
 //라우터 설정
 import { HashRouter as BrowserRouter, Route, Routes } from 'react-router-dom';
+import Test from './page/Test';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path=':id' element={<ProductDetail/>} />
         </Route>
         <Route path='/Cart' element ={<Cart />} />  
+        <Route path='/Test' element = {<Test />} />
         <Route
         path="*"
         element={

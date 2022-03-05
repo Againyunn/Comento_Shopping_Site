@@ -3,61 +3,90 @@ import { Link, Outlet, useParams } from 'react-router-dom'
 import AlertTheme from '../component/AlertTheme';//사용자 지정 alert 디자인 적용
 import ShowType from '../component/ShowType';  //상세페이지 || 리뷰의 hover 적용
 import { getGiftList, getReview, getSpringComes, getWinterList } from '../data/ProductData';
+//API 테스트
+import axios from 'axios'
+// import ThisProductDetail from '../api/ThisProductDetail';
+import ThisProductReview from '../api/ThisProductReview';
 
 export default function ProductDetail() {
   //상태값 지정
-  const [thisType, setThisType] = useState('detail') // 보여줄 화면(기본 값: 상품설명) & hover기능 제어용
+  const [thisType, setThisType] = useState('') // 보여줄 화면(기본 값: 상품설명) & hover기능 제어용
   const [thisNum, setThisNum] = useState(0); //현재 상품의 선택 개체 수
+  // const [loadDone, setLoadDone] = useState(false);
+  const [thisProduct, setThisProduct] = useState('');
+  // const [thisReview, setThisReview] = useState([]);
+
+  //API셋팅
+  const [allData, setAllData] = useState('')
+
+   /*API상품******************************************************************** */
+  useEffect( ()=>{
+      //JSON 데이터 호출 테스트
+          axios.get('https://fac1f05f-5735-43de-9ce8-21b5e8c60e4d.mock.pstmn.io/ProductPage/')
+          .then(Response => {
+              setAllData(Response.data)
+  
+          console.log("products",allData);
+          console.log("allData.products",allData.products)
+          })
+          .catch((Error) =>{
+              console.log(Error);
+          })
+      },[setAllData])
 
   useEffect(() => {
-    return (Show())
-  })
+    Show()
+  },[])
+
+  useEffect(() => {
+  /*상품******************************************************************** */
+    // let thisProduct = '';
+
+    if(allData.products === undefined){
+      return
+    }
+    //현재 보고있는 상품의 데이터만 필터링
+    for (var j = 0; j < allData.products.length; j++) {
+      // console.log('allReviews',allReviews[j].id)
+
+      if (productId == allData.products[j].id) {
+        // console.log('checked productId', productId);
+        // console.log('checked allProducts',allProducts[j].id)
+        setThisProduct(allData.products[j]);
+        // setThisReview( thisReview => [...thisReview, allData.reviews[j]]);
+        // thisReview.push(allData.reviews[j]);
+      }
+    }
+  },[allData])
 
   //url의 parameter를 변수로 저장
   let params = useParams();
   let productId = params.id; //이번 페이지에서 사용할 상품식별자
+  // let thisReview = [];
+  
+ 
 
-  //데이터 셋팅
-  let thisProductList = '' //현재 상품군 리스트
-  let thisProduct = '' //현재 상품(id 일치 상품)
-
-  // //alert 디자인 변수 셋팅
-  // const MySwal = withReactContent(Swal)
-
-  //방한용품
-  if (100 <= productId && productId < 200) {
-    thisProductList = getWinterList();
-  }
-
-  //나를 위한 선물
-  if (200 <= productId && productId < 300) {
-    thisProductList = getGiftList();
-  }
-
-  //나를 위한 선물
-  if (300 <= productId && productId < 400) {
-    thisProductList = getSpringComes();
-  }
-
-  //현재 상품의 정보만 담기
-  thisProduct = thisProductList.find(item => item.id == productId)
+  // try{
+  //   if(thisProduct.image !== undefined){
+  //     //상품정보 로딩완료
+  //     setLoadDone(true);
+  //   }
+  //   console.log('thisProduct.imageDetail',thisProduct.imageDetail)
+  //   console.log('loadDone',loadDone)
+  // }
+  // catch{
+    
+  // }
 
 
-  //상품 별 리뷰 글 불러오기
-  function ShowReviewContent() {
-    //DB에서 모든 리뷰 글 호출
-    let allReviews = getReview();
 
-    //현재 조회하고 있는 상품의 리뷰만 추출후 저장용 배열
-    let thisReview = [];
 
-    //현재 보고있는 상품의 리뷰만 필터링
-    for (var j = 0; j < allReviews.length; j++) {
-      if (productId == allReviews[j].id) {
-        thisReview.push(allReviews[j]);
-      }
-    }
+  /*리뷰******************************************************************** */
+  //상품 리뷰 가져오기
+  function ShowReviewContent({thisReview}) {
+    console.log(thisReview)
 
+    // let thisReview = ThisProductReview(productId) //현재 상품 리뷰(id 일치 상품)
     //리뷰가 없다면, 아직 리뷰가 없다는 텍스트 출력
     if (thisReview.length ===0){
       return(
@@ -105,6 +134,10 @@ export default function ProductDetail() {
     );
   }
 
+  //테스트
+  console.log("productDetail",thisProduct);
+  let thisReview = ThisProductReview(productId)
+  console.log("productReview", thisReview)
 
   //상품설명(이미지 호출 및 출력)
   function ShowDetail() {
@@ -124,7 +157,7 @@ export default function ProductDetail() {
     return (
       <div style={{ width: "100%", marginBottom:"70px" }}>
         <nav style={{ padding: "1rem" }}>
-          < ShowReviewContent />
+          < ShowReviewContent thisReview={thisReview}/>
         </nav>
       </div>
     );
@@ -188,51 +221,59 @@ export default function ProductDetail() {
   }
 
 
+  //테스트
+  console.log('thisProduct',thisProduct.price)
+
   return (
     <>
-      <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
-        <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={() => { window.history.back(); }}>
-          <img style={{ height: "20px", width: "20px" }} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'} />
-        </div>
-        <Link to='/' style={{ textDecoration: 'none' }}>
-          <div style={{ fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>토멘코 쇼핑</div>
-        </Link>
-        <Link to='/Cart' style={{ textDecoration: 'none' }}>
-          <div style={{ paddingTop: "5px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "12px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>장바구니</div>
-        </Link>
-      </div>
-
-      <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
-        <div style={{ textAlign: "center" }}>
-          <img style={{ maxWidth:"100%", maxHeight:"100%", float: "top", position: "relative"}} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
-        </div>
-        <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
-          <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
-            <div style={{ paddingTop: "15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
-            <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}원</div>
+        <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
+          <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={() => { window.history.back(); }}>
+            <img style={{ height: "20px", width: "20px" }} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'} />
           </div>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            <div style={{ fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>토멘코 쇼핑</div>
+          </Link>
+          <Link to='/Cart' style={{ textDecoration: 'none' }}>
+            <div style={{ paddingTop: "5px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "12px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>장바구니</div>
+          </Link>
+        </div>
 
-          <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
-            <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
-            <input style={{ border: "0px", borderRadius: "3px", background: "#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
-            <p style={{ fontSize: "15px", position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
-            <input style={{ border: "0px", borderRadius: "3px", background: "	#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
-              if (thisNum === 0) { 
-                return
-              } 
-              setThisNum(thisNum => thisNum - 1);
-            }} value='–' />
+        <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
+          <div style={{ textAlign: "center" }}>
+            <img style={{ maxWidth:"100%", maxHeight:"100%", float: "top", position: "relative"}} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
           </div>
+          <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
+            <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
+              <div style={{ paddingTop: "15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
+              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.price}원</div>
+            </div>
+  
+            <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
+              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
+              <input style={{ border: "0px", borderRadius: "3px", background: "#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
+              <p style={{ fontSize: "15px", position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
+              <input style={{ border: "0px", borderRadius: "3px", background: "	#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
+                if (thisNum === 0) { 
+                  return
+                } 
+                setThisNum(thisNum => thisNum - 1);
+              }} value='–' />
+            </div>
+          </div>
+  
+          <div style={{ height: "100%", float: "top", position: "relative" }}>
+            <div style={ShowType(thisType, "detail")} onClick={() => setThisType('detail') } >상품설명</div>
+            <div style={ShowType(thisType, "review")} onClick={() => setThisType('review') }>상품후기</div>
+          </div>
+          <Show style={{ float: "top", position: "relative" }} />
+  
+          <div style={{ float: "top", paddingTop: "1rem", backgroundColor: " #24DBAF", zIndex: "2", position: "fixed", bottom: "0px", left: "0px", width: "100%", height: "40px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", textAlign: "center" }} onClick={() => ProductCart()}>장바구니 담기</div>
         </div>
 
-        <div style={{ height: "100%", float: "top", position: "relative" }}>
-          <div style={ShowType(thisType, "detail")} onClick={() => setThisType('detail') } >상품설명</div>
-          <div style={ShowType(thisType, "review")} onClick={() => setThisType('review') }>상품후기</div>
-        </div>
-        <Show style={{ float: "top", position: "relative" }} />
-
-        <div style={{ float: "top", paddingTop: "1rem", backgroundColor: " #24DBAF", zIndex: "2", position: "fixed", bottom: "0px", left: "0px", width: "100%", height: "40px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", textAlign: "center" }} onClick={() => ProductCart()}>장바구니 담기</div>
-      </div>
+      
     </>
   )
 }
+
+
+//.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):""

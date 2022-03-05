@@ -11,16 +11,11 @@ export default function Cart() {
   const [resultTotalSum, setResultTotalSum] = useState(0);
   const [checkedItems, setCheckedItems] = useState([]);
 
+  //선택한 상품들의 목록 변화 → 총 가격 변화
   useEffect(() => {
     TotalSum()
-    return ShowCart()
-  },[])
-
-  //선택한 상품들의 목록 변화 → 총 가격 변화
-  useEffect(()=>{
-    TotalSum()
-  },[resultTotalSum])
-
+    ShowCart()
+  })
 
   // let CartList = localStorage.getItem();
   let CartList = []
@@ -103,7 +98,7 @@ export default function Cart() {
   //장바구니 상품 목록 반환(LocalStorage에 있는 정보 호출)
   function ShowCart() {
 
-    setCartLoad('');
+    // setCartLoad('');
     return (
       <div style={{}}>
         <nav
