@@ -8,8 +8,8 @@ export default function ThisPageProduct(productId) {    //가져올 Product의 I
 
     //API 받아오기
     useEffect( ()=>{
-        //JSON 데이터 호출 테스트
-           axios.get('https://fac1f05f-5735-43de-9ce8-21b5e8c60e4d.mock.pstmn.io/ProductPage/')
+        //JSON 데이터 호출
+           axios.get('https://af713111-3b81-45bd-b1a1-fccceb174d27.mock.pstmn.io/ProductPage/')
            .then(Response => {
                 setAllReviews(Response.data.reviews)
            })

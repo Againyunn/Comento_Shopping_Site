@@ -14,22 +14,20 @@ export default function ProductDetail() {
   //상태값 지정
   const [thisType, setThisType] = useState('') // 보여줄 화면(기본 값: 상품설명) & hover기능 제어용
   const [thisNum, setThisNum] = useState(0); //현재 상품의 선택 개체 수
-  // const [loadDone, setLoadDone] = useState(false);
   const [thisProduct, setThisProduct] = useState('');
-  // const [thisReview, setThisReview] = useState([]);
 
   //API셋팅
   const [allData, setAllData] = useState('')
 
    /*API상품******************************************************************** */
   useEffect( ()=>{
-      //JSON 데이터 호출 테스트
-          axios.get('https://fac1f05f-5735-43de-9ce8-21b5e8c60e4d.mock.pstmn.io/ProductPage/')
+      //JSON 데이터 호출
+          axios.get('https://af713111-3b81-45bd-b1a1-fccceb174d27.mock.pstmn.io/ProductPage/')
           .then(Response => {
               setAllData(Response.data)
   
-          console.log("products",allData);
-          console.log("allData.products",allData.products)
+          console.log("get API data",allData);
+          // console.log("allData.products",allData.products)
           })
           .catch((Error) =>{
               console.log(Error);
@@ -42,21 +40,16 @@ export default function ProductDetail() {
 
   useEffect(() => {
   /*상품******************************************************************** */
-    // let thisProduct = '';
 
     if(allData.products === undefined){
       return
     }
+
     //현재 보고있는 상품의 데이터만 필터링
     for (var j = 0; j < allData.products.length; j++) {
-      // console.log('allReviews',allReviews[j].id)
 
       if (productId == allData.products[j].id) {
-        // console.log('checked productId', productId);
-        // console.log('checked allProducts',allProducts[j].id)
         setThisProduct(allData.products[j]);
-        // setThisReview( thisReview => [...thisReview, allData.reviews[j]]);
-        // thisReview.push(allData.reviews[j]);
       }
     }
   },[allData])
@@ -64,31 +57,12 @@ export default function ProductDetail() {
   //url의 parameter를 변수로 저장
   let params = useParams();
   let productId = params.id; //이번 페이지에서 사용할 상품식별자
-  // let thisReview = [];
-  
- 
-
-  // try{
-  //   if(thisProduct.image !== undefined){
-  //     //상품정보 로딩완료
-  //     setLoadDone(true);
-  //   }
-  //   console.log('thisProduct.imageDetail',thisProduct.imageDetail)
-  //   console.log('loadDone',loadDone)
-  // }
-  // catch{
-    
-  // }
-
-
 
 
   /*리뷰******************************************************************** */
   //상품 리뷰 가져오기
   function ShowReviewContent({thisReview}) {
-    console.log(thisReview)
 
-    // let thisReview = ThisProductReview(productId) //현재 상품 리뷰(id 일치 상품)
     //리뷰가 없다면, 아직 리뷰가 없다는 텍스트 출력
     if (thisReview.length ===0){
       return(
@@ -97,7 +71,7 @@ export default function ProductDetail() {
           </div>
       )
         }
-        console.log('themeList',thisReview)
+
     return (
       <div style={{ textAlign: "center", float: "top", position: "relative", top: "35px" }}>
         <nav style={{
@@ -136,9 +110,11 @@ export default function ProductDetail() {
     );
   }
 
+
+  let thisReview = ThisProductReview(productId)
+
   //테스트
   console.log("productDetail",thisProduct);
-  let thisReview = ThisProductReview(productId)
   console.log("productReview", thisReview)
 
   //상품설명(이미지 호출 및 출력)
@@ -224,7 +200,7 @@ export default function ProductDetail() {
 
 
   //테스트
-  console.log('thisProduct',thisProduct.price)
+  // console.log('thisProduct',thisProduct.price)
 
   return (
     <>
@@ -247,7 +223,11 @@ export default function ProductDetail() {
           <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
             <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
               <div style={{ paddingTop: "15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
-              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.price}원</div>
+              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>
+                {
+                thisProduct!==''? 
+                thisProduct.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):0
+                }원</div>
             </div>
   
             <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
