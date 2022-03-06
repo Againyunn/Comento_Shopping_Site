@@ -1,12 +1,14 @@
+/* 상품 상세 페이지 */
+
 import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom'
-import AlertTheme from '../component/AlertTheme';//사용자 지정 alert 디자인 적용
-import ShowType from '../component/ShowType';  //상세페이지 || 리뷰의 hover 적용
-import { getGiftList, getReview, getSpringComes, getWinterList } from '../data/ProductData';
+import AlertTheme from '../../component/AlertTheme';//사용자 지정 alert 디자인 적용
+import ShowType from '../../component/ShowType';  //상세페이지 || 리뷰의 hover 적용
+import { getGiftList, getReview, getSpringComes, getWinterList } from '../../data/ProductData';
 //API 테스트
 import axios from 'axios'
 // import ThisProductDetail from '../api/ThisProductDetail';
-import ThisProductReview from '../api/ThisProductReview';
+import ThisProductReview from '../../api/ThisProductReview';
 
 export default function ProductDetail() {
   //상태값 지정
@@ -95,7 +97,7 @@ export default function ProductDetail() {
           </div>
       )
         }
-
+        console.log('themeList',thisReview)
     return (
       <div style={{ textAlign: "center", float: "top", position: "relative", top: "35px" }}>
         <nav style={{

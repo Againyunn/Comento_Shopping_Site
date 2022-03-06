@@ -1,4 +1,15 @@
 
+//아이템 목록 선택용 Data
+const themes = [
+    {id: 1, type: "winter", name: "방한 용품", img: '/Imgs/썸네일/방한용품.png' },
+    {id: 2, type: "gift", name: "나를 위한 선물", img: '/Imgs/썸네일/나를위한선물.png' },
+    {id: 3, type: "spring", name: "봄은 온다", img: '/Imgs/썸네일/봄은온다.png' },
+    {id: 4, type: "winter", name: "방한 용품2", img: '/Imgs/썸네일/방한용품.png' },
+    {id: 5, type: "gift", name: "나를 위한 선물2", img: '/Imgs/썸네일/나를위한선물.png' },
+    {id: 6, type: "spring", name: "봄은 온다2", img: '/Imgs/썸네일/봄은온다.png' },
+]
+
+
 //winter항목은 id가 100번대
 let winterList = [
 
@@ -140,4 +151,9 @@ export function getSpringComes(){
 
 export function getReview(){
     return Review;
+}
+
+
+export function getTheme(themeType){ //선택한
+    return themes;
 }

@@ -1,9 +1,11 @@
+/* 장바구니 페이지 */
+
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 //alert 디자인 : sweetalert2 npm package 이용
 //npm install --save sweetalert2 sweetalert2-react-content 명령어로 설치
-import AlertTheme from '../component/AlertTheme';
+import AlertTheme from '../../component/AlertTheme';
 
 export default function Cart() {
   //상태 셋팅
