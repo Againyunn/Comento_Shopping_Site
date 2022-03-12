@@ -9,6 +9,8 @@ import { getGiftList, getReview, getSpringComes, getWinterList } from '../../dat
 import axios from 'axios'
 // import ThisProductDetail from '../api/ThisProductDetail';
 import ThisProductReview from '../../api/ThisProductReview';
+import styled from 'styled-components';
+import HeadBlock from './components/HeadBlock';
 
 export default function ProductDetail() {
   //상태값 지정
@@ -114,8 +116,8 @@ export default function ProductDetail() {
   let thisReview = ThisProductReview(productId)
 
   //테스트
-  console.log("productDetail",thisProduct);
-  console.log("productReview", thisReview)
+  // console.log("productDetail",thisProduct);
+  // console.log("productReview", thisReview)
 
   //상품설명(이미지 호출 및 출력)
   function ShowDetail() {
@@ -204,17 +206,7 @@ export default function ProductDetail() {
 
   return (
     <>
-        <div style={{ paddingTop: "3%", backgroundColor: "white", zIndex: "2", position: "fixed", top: "0px", left: "0px", width: "100%", height: "26px" }}>
-          <div style={{ float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }} onClick={() => { window.history.back(); }}>
-            <img style={{ height: "20px", width: "20px" }} src={process.env.PUBLIC_URL + '/Imgs/Allow.png'} alt={'뒤로 가기'} />
-          </div>
-          <Link to='/' style={{ textDecoration: 'none' }}>
-            <div style={{ fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>토멘코 쇼핑</div>
-          </Link>
-          <Link to='/Cart' style={{ textDecoration: 'none' }}>
-            <div style={{ paddingTop: "5px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "12px", fontWeight: "bold", color: "black", float: "left", top: "0px", left: "0px", width: "33.3%", height: "8%", textAlign: 'center' }}>장바구니</div>
-          </Link>
-        </div>
+        <HeadBlock/>
 
         <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
           <div style={{ textAlign: "center" }}>
@@ -256,6 +248,3 @@ export default function ProductDetail() {
     </>
   )
 }
-
-
-//.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):""

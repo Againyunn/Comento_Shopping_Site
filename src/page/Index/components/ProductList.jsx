@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { getWinterList, getGiftList, getSpringComes } from '../../../data/ProductData';
-// import styled from 'styled-components';
 
 //선택한 제품군 목록 불러오는 컴포넌트
 export default function ProductList({theme}) {
@@ -42,11 +42,13 @@ export default function ProductList({theme}) {
                             to={`/ProductDetail/${findList.id}`}
                             key={findList.id}
                         >
-                            <div>
+                            <Content>
                                 <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={process.env.PUBLIC_URL + `${findList.image}`} alt={findList.name} />
-                                <p style={{ color: "black", textAlign: "left", fontFamily: "Noto Sans CJK KR", fontStyle: "normal", fontWeight: "bold", fontSize: "20px", lineHeight: "26px" }}>{findList.name}</p>
-                                <p style={{ color: "black", textAlign: "left", fontFamily: "Noto Sans CJK KR", fontStyle: "normal", fontWeight: "normal", fontSize: "16px", lineHeight: "21px" }}>{findList.describe}</p>
-                            </div>
+                                <div className='outer'>
+                                    <p className='title'>{findList.name}</p>
+                                    <p className='body'>{findList.describe}</p>
+                                </div>
+                            </Content>
                         </Link>
                     </div>
                 ))}
@@ -54,3 +56,34 @@ export default function ProductList({theme}) {
         </div>
     );
 }
+
+
+//css
+const Content = styled.div`
+    font-family: Noto Sans CJK KR;
+    font-style: normal;
+    color: black;
+    align-items: center;
+
+    div.outer{
+        &:hover {
+            background-color: #EEEEEE;
+            color: black;
+          }    
+    }
+
+    p.title{
+        font-weight: bold;
+        font-size: 20px;
+        lineHeight: 26px;
+        text-align: left;
+    }
+
+    p.body{
+        font-weight: normal;
+        font-size: 16px;
+        lineHeight: 21px;
+        text-align: left;
+    }
+
+`

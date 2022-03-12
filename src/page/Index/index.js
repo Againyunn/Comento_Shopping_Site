@@ -11,6 +11,7 @@ import SelectThemeActive from '../../component/SelectThemeActive';
 import styled from 'styled-components';
 
 import ProductList from './components/ProductList';
+import HeadBlock from './components/HeadBlock';
 
 function Index() {
   //상태값 지정
@@ -21,14 +22,13 @@ function Index() {
     ProductList(selectedTheme);
   },[selectedTheme]);
 
-
     //썸네일을 불러올 테마 리스트 값 저장
     const allThemeList = getTheme();
     let tmpList = [];
     let themeList = [];
     let countSwiper = 0;
 
-    //3등분으로 쪼개서 데이터 저장
+    //썸네일에 표시할 ProductTheme 데이터를 3등분으로 쪼개서 저장
     for(var i = 0; i<allThemeList.length; i++){
       tmpList.push(allThemeList[i])
       
@@ -40,10 +40,10 @@ function Index() {
 
   return (
     <>
-      <MainHeadBlock />
-      <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
+      <HeadBlock />
+      <div style={{ zIndex: "1", float: "top", position: "absolute", top: "5%", width: "100%"}}>
       
-      <Swiper className="mySwiper" style={{ borderBottom: "solid 2px #EEEEEE" }}>
+      <Swiper className="mySwiper" style={{paddingTop:"10px", paddingBottom:"10px", borderBottom: "solid 2px #EEEEEE", borderTop: "solid 2px #EEEEEE"  }}>
           {
             themeList.map(thisThings =>(
               <SwiperSlide key={countSwiper += 1}>
@@ -60,7 +60,7 @@ function Index() {
             ))}
         </Swiper>
 
-        <ProductList style={{ float: "top", marginTop: "5px", width: "100%" }} theme={selectedTheme}/>
+        <ProductList theme={selectedTheme}/>
 
         <Outlet />
       </div>
@@ -69,82 +69,3 @@ function Index() {
 }
 
 export default Index;
-
-//디자인 적용
-
-const MainHead = styled.div`
-  /*배치*/
-  display: flex;
-  padding-top: 3%;
-  z-index: 2;
-  top: 0;
-  position: fixed;
-  align-items: center;
-  container{
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-  }
-  /*크기*/
-  width: 100%;
-  height: 40px;
-  
-  /*색 조정 */
-  background-color: white;
-  border-bottom: solid 2px #EEEEEE;
-`
-
-const CenterMainHead = styled.div`
-  /*배치*/
-  display: flex;
-  text-align: center;
-  position: relative;
-  margin-right: 10%;
-  margin-left: 10%;
-  /*크기*/
-  width: 30%;
-  /*글씨*/
-  color: black;
-  font-family: Noto Sans KR;
-  font-style: normal;
-  font-size: 18px;
-  font-weight: bold;
-  white-space : nowrap; 
-`
-
-const SideMainHead = styled.div`
-  /*배치*/
-  display: flex;
-  text-align: center;
-  position: relative;
-  
-  /*크기*/
-  width: 30%;
-  /*글씨*/
-  color: black;
-  font-family: Noto Sans KR;
-  font-style: normal;
-  font-size: 12px;
-  font-weight: normal;
-  white-space : nowrap; 
-`
-
-function MainHeadBlock() {
-  return (
-    <MainHead className='container'>
-      <SideMainHead>
-      </SideMainHead>
-      <CenterMainHead>
-        <Link to="/" style={{ textDecoration: 'none', color: "black" }}>
-          토멘코 쇼핑
-        </Link>
-      </CenterMainHead>
-      <SideMainHead>
-        <Link to="/Cart" style={{ textDecoration: 'none', color: "black" }}>
-          장바구니
-        </Link>
-      </SideMainHead>
-
-    </MainHead>
-  )
-}
