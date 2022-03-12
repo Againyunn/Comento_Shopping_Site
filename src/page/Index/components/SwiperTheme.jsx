@@ -24,22 +24,20 @@ export default function SwiperTheme(clickedTheme) {
     //Swiper 값을 반환
     function ShowSwiper(){
         return(
-            <>
-                <Swiper className="mySwiper">
-                    <SwiperSlide>
-                        {
-                            themeList.map(thisTheme =>(
-                                <div 
-                                key={thisTheme.id}
-                                style={SelectThemeActive(selectedTheme, thisTheme.type, thisTheme.img)}
-                                onClick={() => setSelectedTheme(thisTheme.type)}
-                                >{thisTheme.name}
-                                </div>
-                            ))
-                        }
-                    </SwiperSlide>
-                </Swiper>
-            </>
+            <Swiper className="mySwiper">
+                <SwiperSlide>
+                    {
+                        themeList.map(thisTheme =>(
+                            <div 
+                            key={thisTheme.id}
+                            style={SelectThemeActive(selectedTheme, thisTheme.type, thisTheme.img)}
+                            onClick={() => setSelectedTheme(thisTheme.type)}
+                            >{thisTheme.name}
+                            </div>
+                        ))
+                    }
+                </SwiperSlide>
+            </Swiper>
         )
     }
 

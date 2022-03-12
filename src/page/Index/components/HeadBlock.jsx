@@ -2,6 +2,29 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+
+
+export default function HeadBlock() {
+  return (
+    <Header>
+      <div className='container'>
+        <div className="item"/>
+        <div className="item">
+          <Link to="/" style={{ textDecoration: 'none', color: "black" }}>
+            토멘코 쇼핑
+          </Link>
+        </div>
+        <div className="item">
+          <Link to="/Cart" style={{ textDecoration: 'none', color: "black" }}>
+            장바구니
+          </Link>
+        </div>
+      </div>
+    </Header>
+  )
+}
+
+//css
 const Header = styled.div`
   z-index: 2;
 
@@ -55,23 +78,3 @@ const Header = styled.div`
   }
 
 `
-
-export default function HeadBlock() {
-  return (
-    <Header>
-      <div className='container'>
-      <div className="item"/>
-      <div className="item">
-        <Link to="/" style={{ textDecoration: 'none', color: "black" }}>
-          토멘코 쇼핑
-        </Link>
-      </div>
-      <div className="item">
-        <Link to="/Cart" style={{ textDecoration: 'none', color: "black" }}>
-          장바구니
-        </Link>
-      </div>
-      </div>
-    </Header>
-  )
-}
