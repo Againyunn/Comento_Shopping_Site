@@ -204,47 +204,153 @@ export default function ProductDetail() {
   //테스트
   // console.log('thisProduct',thisProduct.price)
 
+  //css
+  const ImgBlock = styled.div`
+    div.container{
+      display: flex;
+      flex-direction: column;
+      flex-warp: nowrap;
+      align-items: center;
+    }
+    
+    img{
+      max-width: 100%;
+    }  
+  `
+
+  const MainBlock = styled.div`
+    div.container{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+
+      /* 폰트 공통 설정 */
+      font-family: Noto Sans CJK KR;
+      font-style: normal;
+      color: black;
+    }
+
+    div.item:nth-child(1){
+      flex-basis: 47%;
+      text-align: left;
+      padding-left: 10px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    div.item:nth-child(2){
+      flex-basis: 47%;
+      text-align: right;
+      padding-right: 10px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    div.item:nth-child(3){
+      flex-basis: 47%;
+      text-align: left;
+      padding-right: 15px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    div.item:nth-child(4){
+      flex-basis: 45%;
+      padding-right: 10px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    div.item:nth-child(5){
+      flex-basis: 48%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: normal;
+      border: solid 2px #EEEEEE;
+
+      &:hover {
+        background-color: #EEEEEE;
+        color: black;
+      }
+    }
+
+    div.item:nth-child(6){
+      flex-basis: 48%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: normal;
+      border: solid 2px #EEEEEE;
+
+      &:hover {
+        background-color: #EEEEEE;
+        color: black;
+      }
+    }
+  `
+
+  const CollectCart = styled.div`
+    padding-top: 1rem;
+    background-color: #24DBAF;
+    z-index: 2;
+    position: fixed;
+    bottom: 0px; 
+    left: 0px;
+    width: 100%; 
+    height: 40px; 
+    font-family: Noto Sans KR;
+    font-style: normal; 
+    font-size: 18px; 
+    font-weight: bold; 
+    color: black; 
+    text-align: center;
+  `
+
   return (
-    <>
+      <>
         <HeadBlock/>
 
-        <div style={{ zIndex: "1", float: "top", position: "absolute", top: "10%", width: "100%" }}>
-          <div style={{ textAlign: "center" }}>
-            <img style={{ maxWidth:"100%", maxHeight:"100%", float: "top", position: "relative"}} src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
+        <ImgBlock>
+          <div className='container'>
+            <img src={process.env.PUBLIC_URL + `${thisProduct.image}`} alt={thisProduct.name} />
           </div>
-          <div style={{ float: "top", position: "relative", width: "100%", left: "0px", height: "50px" }}>
-            <div style={{ float: "left", position: "relative", width: "60%", left: "0px" }}>
-              <div style={{ paddingTop: "15px", fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "20px", fontWeight: "bold", color: "black", paddingLeft: "30px", float: "top" }}>{thisProduct.name}</div>
-              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", color: "black", paddingLeft: "30px", float: "top" }}>
-                {
+        </ImgBlock>
+        <MainBlock>
+          <div className='container'>
+            <div className='item'>
+              {thisProduct.name}
+            </div>
+            <div className='item'>
+              {
                 thisProduct!==''? 
                 thisProduct.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):0
-                }원</div>
+              }원
             </div>
-  
-            <div style={{ float: "left", position: "relative", width: "40%", right: "0px", paddingTop: "10px" }}>
-              <div style={{ fontFamily: " Noto Sans CJK KR", fontStyle: "normal", fontSize: "16px", fontWeight: "normal", textAlign: "right", marginRight: "2px", height: "20px" }}>수량선택</div>
-              <input style={{ border: "0px", borderRadius: "3px", background: "#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
-              <p style={{ fontSize: "15px", position: "relative", float: "right", marginRight: "5px" }}>{thisNum}</p>
-              <input style={{ border: "0px", borderRadius: "3px", background: "	#c8c8c8", marginTop: "15px", position: "relative", float: "right", marginRight: "5px" }} type='button' onClick={() => {
-                if (thisNum === 0) { 
-                  return
-                } 
-                setThisNum(thisNum => thisNum - 1);
-              }} value='–' />
-            </div>
-          </div>
-  
-          <div style={{ height: "100%", float: "top", position: "relative" }}>
-            <div style={ShowType(thisType, "detail")} onClick={() => setThisType('detail') } >상품설명</div>
-            <div style={ShowType(thisType, "review")} onClick={() => setThisType('review') }>상품후기</div>
-          </div>
-          <Show style={{ float: "top", position: "relative" }} />
-  
-          <div style={{ float: "top", paddingTop: "1rem", backgroundColor: " #24DBAF", zIndex: "2", position: "fixed", bottom: "0px", left: "0px", width: "100%", height: "40px", fontFamily: 'Noto Sans KR', fontStyle: "normal", fontSize: "18px", fontWeight: "bold", color: "black", textAlign: "center" }} onClick={() => ProductCart()}>장바구니 담기</div>
-        </div>
 
-      
+            <div className='item'>
+              &nbsp;수량선택
+            </div>
+
+            <div className='item'>
+              <input style={{ border: "0px", borderRadius: "3px", background: "#c8c8c8", marginTop: "15px", position: "relative", float: "right"}} type='button' onClick={() => setThisNum(thisNum => thisNum + 1)} value='+' />
+                <p style={{ position: "relative", float: "right", marginRight: "5px", marginLeft: "5px" }}>{thisNum}</p>
+                <input style={{ border: "0px", borderRadius: "3px", background: "	#c8c8c8", marginTop: "15px", position: "relative", float: "right" }} type='button' onClick={() => {
+                  if (thisNum === 0) { 
+                    return
+                  } 
+                  setThisNum(thisNum => thisNum - 1);
+                }} value='–' />
+            </div>
+
+            <div className='item' style={ShowType(thisType, "detail")} onClick={() => setThisType('detail') } >상품설명</div>
+            <div className='item' style={ShowType(thisType, "review")} onClick={() => setThisType('review') }>상품후기</div>
+
+          </div>
+        </MainBlock>
+
+        <Show />
+
+        <CollectCart onClick={() => ProductCart()}>장바구니 담기</CollectCart>
     </>
   )
 }

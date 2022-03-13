@@ -1,11 +1,13 @@
 /* 장바구니 페이지 */
 
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled,{css} from 'styled-components';
 
 //alert 디자인 : sweetalert2 npm package 이용
 //npm install --save sweetalert2 sweetalert2-react-content 명령어로 설치
 import AlertTheme from '../../component/AlertTheme';
+
+// import checkboxStyle from './css/checkboxStyle.css';
 
 export default function Cart() {
   //상태 셋팅
@@ -76,26 +78,6 @@ export default function Cart() {
     }
   }
 
-  //체크박스 모양 변경
-  const CheckBoxStyle = styled.label`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    height: 13px;
-    background-color: none;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    transform:${props => (props.checkInput ? `display : none`: `display: flex`)}
-    transform:${props => (props.checked ? `background-color: yellow`: `background-color: none`)}
-  `
-    
-  function CheckBox({children}){
-    return <CheckBoxStyle>{children}</CheckBoxStyle>
-  }
-  
-
 
   //장바구니 상품 목록 반환(LocalStorage에 있는 정보 호출)
   function ShowCart() {
@@ -115,7 +97,7 @@ export default function Cart() {
                 setCartLoad('reset');
               }}>X</p>
               <div style={{ float: "top", width: "100%", height: "100px", paddingBottom: "10px" }}>
-                <div style={{ position: "relative", float: "left", width: "8%" }}>
+                <div className='wrap' style={{ position: "relative", float: "left", width: "8%" }}>
                   <input id={findList.id} type="checkbox" onChange={
                     (e) => {
                       console.log("e.currentTarget.checked:",e.currentTarget.checked)

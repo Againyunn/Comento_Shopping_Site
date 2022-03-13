@@ -11,9 +11,6 @@ const Header = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    
-
-    display: 100%;
     align-items: center
   }
 
